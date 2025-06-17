@@ -9,28 +9,166 @@
   <body>
     <div class="calculator">
       <h1 id="calculator_nav_result">0</h1>
+
       <div class="calculator_nav">
-        <button onclick="deleteInput()" id="calculator_nav_ac">C</button>
-        <button id="calculator_nav_-">+/-</button>
-        <button onclick="foiz()" id="calculator_nav_&">%</button>
-        <button onclick="bulish()" id="calculator_nav_%">/</button>
-        <button onclick="seven()" id="calculator_nav_7">7</button>
-        <button onclick="eight()" id="calculator_nav_8">8</button>
-        <button onclick="nine()" id="calculator_nav_9">9</button>
-        <button onclick="kopaytirish()" id="calculator_nav_x">*</button>
-        <button onclick="four()" id="calculator_nav_4">4</button>
-        <button onclick="fife()" id="calculator_nav_5">5</button>
-        <button onclick="six()" id="calculator_nav_6">6</button>
-        <button onclick="minus()" id="calculator_nav_minus">-</button>
-        <button onclick="oneN()" id="calculator_nav_1">1</button>
-        <button onclick="twoN()" id="calculator_nav_2">2</button>
-        <button onclick="three()" id="calculator_nav_3">3</button>
-        <button onclick="plus()" id="calculator_nav_plus">+</button>
-        <button id="calculator_nav_0">0</button>
+        <button
+          class="main2_button"
+          onclick="deleteInput()"
+          id="calculator_nav_ac"
+        >
+          C
+        </button>
+        <button class="main2_button" id="calculator_nav_-">+/-</button>
+        <button
+          class="main2_button"
+          onclick="handleNumberClick(this)"
+          id="calculator_nav_&"
+        >
+          %
+        </button>
+        <button
+          class="main-button"
+          onclick="handleNumberClick(this)"
+          id="calculator_nav_%"
+        >
+          /
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_7">
+          7
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_8">
+          8
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_9">
+          9
+        </button>
+        <button
+          class="main-button"
+          onclick="handleNumberClick(this)"
+          id="calculator_nav_x"
+        >
+          *
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_4">
+          4
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_5">
+          5
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_6">
+          6
+        </button>
+        <button
+          class="main-button"
+          onclick="handleNumberClick(this)"
+          id="calculator_nav_minus"
+        >
+          -
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_1">
+          1
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_2">
+          2
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_3">
+          3
+        </button>
+        <button
+          class="main-button"
+          onclick="handleNumberClick(this)"
+          id="calculator_nav_plus"
+        >
+          +
+        </button>
+        <button onclick="handleNumberClick(this)" id="calculator_nav_0">
+          0
+        </button>
         <button id="calculator_nav_,">,</button>
-        <button onclick="result()" id="calculator_nav_=">=</button>
+        <button
+          class="main-button"
+          onclick="handleResult()"
+          id="calculator_nav_="
+        >
+          =
+        </button>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js">
+      let result = document.getElementById('calculator_nav_result');
+      let startNumber = '';
+      let operator = '';
+      let endNumber = '';
+      const operators = ['+', '-', '*', '/', '%'];
+      function handleNumberClick(event) {
+        let value = event.innerText;
+        if (operators.includes(value)) {
+          if (startNumber && endNumber) {
+            handleResult();
+          }
+          if (operators.includes(result.innerText[result.innerText.length - 1])) {
+            return;
+          }
+          operator = value;
+        } else {
+          if (operator) {
+            endNumber = value;
+          } else {
+            startNumber += value;
+          }
+        }
+        if (result.innerText === '0') {
+          if (!operators.includes(value)) {
+            result.innerText = value;
+          }
+        } else {
+          if (
+            operators.includes(value) &&
+            operators.includes(result.innerText[result.innerText.length - 1])
+          ) {
+            return;
+          }
+          result.innerText += value;
+        }
+      }
+      function handleResult() {
+        let firstNum = Number(startNumber);
+        let secondNum = Number(endNumber);
+        switch (operator) {
+          case '+':
+            result.innerText = firstNum + secondNum;
+
+            break;
+          case '-':
+            result.innerText = firstNum - secondNum;
+
+            break;
+          case '*':
+            result.innerText = firstNum * secondNum;
+
+            break;
+          case '/':
+            result.innerText = firstNum / secondNum;
+
+            break;
+          case '%':
+            result.innerText = (firstNum / 100) * secondNum;
+
+            break;
+
+          default:
+            break;
+        }
+        startNumber = result.innerText;
+        endNumber = '';
+        operator = '';
+      }
+      function deleteInput() {
+        startNumber = '';
+        endNumber = '';
+        operator = '';
+        result.innerText = 0;
+      }
+    </script>
   </body>
 </html>
