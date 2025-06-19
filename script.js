@@ -40,9 +40,9 @@ function handleResult() {
   let firstNum = Number(startNumber);
   let secondNum = Number(endNumber);
   if (firstNum === 6789) {
+    window.location.href = 'secret.html';
   }
   switch (operator) {
-    // window.location.href = 'secret.html';
     case '+':
       result.innerText = firstNum + secondNum;
 
